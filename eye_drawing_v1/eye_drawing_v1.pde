@@ -1,13 +1,15 @@
 import processing.video.*;
 Movie myMovie;
 //https://vimeo.com/154619333
-ArrayList<PVector> points = new ArrayList<PVector>();
+ArrayList<Point> points = new ArrayList<Point>();
 
+PImage image; 
 
 void setup() {
-  //size(600, 600);
-  fullScreen();
+  size(600, 600);
+  //fullScreen();
   myMovie = new Movie(this, "crater.mp4");
+  image = loadImage("frankenthaler.jpg");
   //myMovie.play();
   //line = new PVector(0,0);
 }
@@ -16,12 +18,16 @@ float previousX = 0;
 float previousY = 0; 
 
 void draw() {
+  println(frameRate); 
   //background(255);
   //image(myMovie, 0, 0, width, height);
+  image(image, 0, 0, width, height);
+  color c = get(mouseX, mouseY);
 
   //fill(0);
   //strokeWeight(2);
-  points.add(new PVector(mouseX, mouseY));
+  Point newPoint = new Point (c, mouseX, mouseY);
+  points.add(newPoint); 
   //line(previousX, previousY, mouseX, mouseY);
   //previousY = mouseY;
   //previousX = mouseX; 
@@ -29,24 +35,40 @@ void draw() {
 
   if (key == CODED) {
     if (keyCode == UP) {
+      background(255);
       for (int i = 0; i < points.size(); i++) {
 
-        PVector point = points.get(i);
+        Point thisPoint = points.get(i);
         if (i==0) {
-          previousY = point.y;
-          previousX = point.x;
+          previousY = thisPoint.location.y;
+          previousX = thisPoint.location.x;
         }
-        line(previousX, previousY, point.x, point.y);
-        previousY = point.y;
-        previousX = point.x;
-      }
-    }
-    if (keyCode == DOWN) {
-      background(255); 
+        strokeWeight(5);
+        stroke(thisPoint.sampleRGB);
+        line(previousX, previousY, thisPoint.location.x, thisPoint.location.y);
+        previousY = thisPoint.location.y;
+        previousX = thisPoint.location.x;
       }
     }
   }
+}
 
+//void keyPressed() {
+//background(255);
+//  for (int i = 0; i < points.size(); i++) {
+
+//    Point thisPoint = points.get(i);
+//    if (i==0) {
+//      previousY = thisPoint.location.y;
+//      previousX = thisPoint.location.x;
+//    }
+//    strokeWeight(5);
+//    stroke(thisPoint.sampleRGB);
+//    line(previousX, previousY, thisPoint.location.x, thisPoint.location.y);
+//    previousY = thisPoint.location.y;
+//    previousX = thisPoint.location.x;
+//  }
+//}
 
 
 
