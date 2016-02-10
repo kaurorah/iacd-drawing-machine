@@ -9,8 +9,8 @@ void setup() {
   size(600, 600);
   //fullScreen();
   myMovie = new Movie(this, "crater.mp4");
-  image = loadImage("frankenthaler.jpg");
-  //myMovie.play();
+  //image = loadImage("frankenthaler.jpg");
+  myMovie.play();
   //line = new PVector(0,0);
 }
 
@@ -20,8 +20,8 @@ float previousY = 0;
 void draw() {
   println(frameRate); 
   //background(255);
-  //image(myMovie, 0, 0, width, height);
-  image(image, 0, 0, width, height);
+  image(myMovie, 0, 0, width, height);
+  //image(image, 0, 0, width, height);
   color c = get(mouseX, mouseY);
 
   //fill(0);
